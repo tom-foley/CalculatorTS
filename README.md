@@ -1,2 +1,2 @@
 # CalculatorTS
-Calculator port taken from my ExpressionEvaluator solution in C and ported to TypeScript
+Calculator app ported from [my C ExpressionEvaluator](https://github.com/tom-foley/ExpressionEvaluator "ExpressionEvaluator") to TypeScript
