@@ -3,7 +3,7 @@ enum TOKEN_TYPES {
     NUMBER = 1,
     OP = 2,
     START_EXP = 3,
-    END_EXP = 4,
+    END_EXP = 4
 };
 
 enum OP_TYPES {
@@ -13,7 +13,7 @@ enum OP_TYPES {
     MULTIPLY = 2,
     DIVIDE = 2,
     POWER = 3,
-    NEW_EXPRESSION = 4,
+    NEW_EXPRESSION = 4
 };
 
 
@@ -63,7 +63,7 @@ export class EvalResult {
 
     public setError(msg: string): void {
         this.error = true;
-        this.errorMessage = msg;
+        this.errorMessage = 'Error: ' + msg;
         this.result = null;
     }
 
@@ -121,6 +121,9 @@ export class Calculator {
 
 
     private getNextNumber(): number {
+        //  Need to use type 'any' here for compiler
+        //  in order to do efficient conversion of
+        //  char to int -- compiler errors otherwise
         let num: any = 0;
         let token: any = this.expression[this.counter];
         const zero: any = '0';
@@ -131,7 +134,7 @@ export class Calculator {
             this.counter += 1;
             this.setTokenIndex();
             token = this.expression[this.counter];
-        } while (CharUtils.IsNumber(token))
+        } while (CharUtils.IsNumber(token));
 
         return num;
     }
@@ -174,6 +177,7 @@ export class Calculator {
 
     private performOp(lhs: EvalResult, rhs: EvalResult, op: string): void {
         let opStr: string;
+
         if (op !== null) {
             opStr = 'Performing Op:\t' + lhs.result + ' ' + op + ' ' + rhs.result + ' = ';
         }
@@ -226,18 +230,17 @@ export class Calculator {
         //  If we are at beginning of expression,
         //      check if first char is OPEN_BRACE
         //  else, we are in recursive call
-        //      check if previos char is OPEN_BRACE
-        if (this.counter === 0 && this.expression[this.counter] === CharUtils.OPEN_BRACE) {
+        //      check if previous char is OPEN_BRACE
+        if (this.counter === 0) {
             parenFlag = this.expression[this.counter] === CharUtils.OPEN_BRACE;
-        }
-        else if (this.counter > 1 && this.expression[this.counter - 1] === CharUtils.OPEN_BRACE) {
+        } else if (this.counter > 1) {
             parenFlag = this.expression[this.counter - 1] === CharUtils.OPEN_BRACE;
         }
 
         //  DEBUG
-        // if (parenFlag) {
-        //     console.log('OPEN_BRACE');
-        // }
+        if (parenFlag) {
+            console.log('OPEN_BRACE');
+        }
 
         while (this.counter < this.expressionLen) {
             this.setTokenIndex();
@@ -275,13 +278,19 @@ export class Calculator {
                         if (nextResult.error) {
                             return nextResult;
                         }
+
+                        if (nextToken === CharUtils.OPEN_BRACE) {
+                            //  We've returned from recursive () expression,
+                            //  mark parenFlag = false
+                            parenFlag = false;
+                        }
                     }
 
                     this.performOp(result, nextResult, op);
                     break;
                 case (TOKEN_TYPES.END_EXP):
                     //  DEBUG
-                    //console.log('CLOSE_BRACE');
+                    console.log('CLOSE_BRACE');
                     return result;
                 case (TOKEN_TYPES.OP):
                     opType = this.getOpType(token);
@@ -326,12 +335,12 @@ export class Calculator {
                         if (nextResult.error) {
                             return nextResult;
                         }
-                    }
 
-                    if (nextToken === CharUtils.OPEN_BRACE) {
-                        //  We've returned from recursive () expression,
-                        //  mark parenFlag = false
-                        parenFlag = false;
+                        if (nextToken === CharUtils.OPEN_BRACE) {
+                            //  We've returned from recursive () expression,
+                            //  mark parenFlag = false
+                            parenFlag = false;
+                        }
                     }
 
                     this.performOp(result, nextResult, op);
@@ -345,6 +354,7 @@ export class Calculator {
         if (parenFlag) {
             result.setError('Missing closing parentheses');
         }
+
         return result;
     }
 
