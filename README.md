@@ -28,9 +28,9 @@ console.log(calcResult);    //  outputs 109
 The return type of `calc()` is an `EvalResult` (found in src/calculator.ts) which is an object containing the following three properties:
 
 ```typescript
-    error: boolean;
-    errorMessage: string;
-    result: number;
+error: boolean;
+errorMessage: string;
+result: number;
 ```
 
 In the example above, we passed in a valid expression (`(1 + 3 * (2 * (1 + 1) ^ 2) + 2) * 2 * 2 + 1`), so we directly assigned the `EvalResult.result` to `calcResult`. However, normally you should check to make sure no error occurred during the calculation by checking the `EvalResult.error` as follows:
