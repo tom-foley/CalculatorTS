@@ -1,0 +1,26 @@
+{
+  "name": "calculator-ts",
+  "version": "1.0.0",
+  "description": "Calculator app ported from [my C ExpressionEvaluator](https://github.com/tom-foley/ExpressionEvaluator \"ExpressionEvaluator\") to TypeScript. The calculator parses and evaluates expressions in a single pass-through rather than parsing & tokenizing the expression and calculating after. Since this library is from a basic language like C, it uses only primitive operations and no native/built-in JavaScript functions such as string/math functions like substring() or Math.pow().",
+  "main": "src/Calculator.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tom-foley/CalculatorTS.git"
+  },
+  "author": "tom-foley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tom-foley/CalculatorTS/issues"
+  },
+  "homepage": "https://github.com/tom-foley/CalculatorTS#readme",
+  "devDependencies": {
+    "gulp-typescript": "^2.13.6",
+    "webpack": "^1.13.1"
+  }
+}

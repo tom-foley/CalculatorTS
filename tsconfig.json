@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
+        "module": "amd",
         "sourceMap": false,
-        "outDir": "lib/"
-    }
+        "outDir": "lib/",
+        "outFile": "calculator.js",
+        "removeComments": true
+    },
+    "files": [
+        "src/Calculator.ts"
+    ]
 }

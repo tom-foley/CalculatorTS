@@ -1,53 +1,4 @@
-enum TOKEN_TYPES {
-    INVALID = 0,
-    NUMBER = 1,
-    OP = 2,
-    START_EXP = 3,
-    END_EXP = 4
-};
-
-enum OP_TYPES {
-    NO_OP = 0,
-    ADD = 1,
-    SUBTRACT = 1,
-    MULTIPLY = 2,
-    DIVIDE = 2,
-    POWER = 3,
-    NEW_EXPRESSION = 4
-};
-
-
-class CharUtils {
-    public static get NUL() { return '\u0000'; };
-    public static get WHITESPACE() { return '\u0020'; };
-    public static get OPEN_BRACE() { return '\u0028'; };
-    public static get CLOSE_BRACE() { return '\u0029'; };
-    public static get EXPONENT() { return '\u005E'; };
-    public static get MULTIPLIER() { return '\u002A'; };
-    public static get DIVIDER() { return '\u002F'; };
-    public static get ADDER() { return '\u002B'; };
-    public static get SUBTRACTER() { return '\u002D'; };
-
-    public static get NUMBERS() {
-        return [
-            '\u0030', '\u0031', '\u0032', '\u0033',
-            '\u0034', '\u0035', '\u0036',
-            '\u0037', '\u0038', '\u0039'
-        ];
-    }
-
-    public static IsNumber(token: string): boolean {
-        return this.NUMBERS.indexOf(token) >= 0;
-    }
-
-
-    public static IsOp(token: string): boolean {
-        return token === this.ADDER || token === this.SUBTRACTER
-            || token === this.MULTIPLIER || token === this.DIVIDER
-            || token === this.EXPONENT;
-    }
-}
-
+import { TOKEN_TYPES, OP_TYPES, CharUtils } from './CharUtils';
 
 export class EvalResult {
     error: boolean;
@@ -123,7 +74,7 @@ export class Calculator {
     private getNextNumber(): number {
         //  Need to use type 'any' here for compiler
         //  in order to do efficient conversion of
-        //  char to int -- compiler errors otherwise
+        //  char to int -- TS compiler complains otherwise
         let num: any = 0;
         let token: any = this.expression[this.counter];
         const zero: any = '0';
@@ -238,9 +189,9 @@ export class Calculator {
         }
 
         //  DEBUG
-        if (parenFlag) {
-            console.log('OPEN_BRACE');
-        }
+        // if (parenFlag) {
+        //     console.log('OPEN_BRACE');
+        // }
 
         while (this.counter < this.expressionLen) {
             this.setTokenIndex();
@@ -290,7 +241,7 @@ export class Calculator {
                     break;
                 case (TOKEN_TYPES.END_EXP):
                     //  DEBUG
-                    console.log('CLOSE_BRACE');
+                    //  console.log('CLOSE_BRACE');
                     return result;
                 case (TOKEN_TYPES.OP):
                     opType = this.getOpType(token);
