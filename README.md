@@ -86,4 +86,3 @@ node test/nodeTest.js
 
 ##  TODO
 *   Add support for parsing of doubles/floats
-*   Add support for negative (-) and doubles/float exponent values
