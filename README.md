@@ -1,4 +1,4 @@
-#   CalculatorTS
+#   TS-Calculator
 Calculator app ported from [my C ExpressionEvaluator](https://github.com/tom-foley/ExpressionEvaluator "ExpressionEvaluator") to TypeScript. The calculator parses and evaluates expressions in a single pass-through rather than parsing & tokenizing the expression and calculating after. Since this library is from a basic language like C, it uses only primitive operations and no native/built-in JavaScript functions such as string/math functions like substring() or Math.pow().
 
 ##  Compiling the Source
